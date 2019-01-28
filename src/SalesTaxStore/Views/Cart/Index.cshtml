@@ -1,0 +1,19 @@
+﻿@model Receipt
+
+<div style="position: relative">
+    <h1 class="display-6">Your Receipt &nbsp;<small>All the details.</small></h1>
+    <br />
+    <table class="table">
+        @foreach (var item in Model.PurchasedProducts)
+        {
+            <tr>
+                <td>@(item.IsImported ? "Imported " : "") @item.ProductName: @item.ProductPrice.ToString("0.00") @item.QuantityLabel</td>
+            </tr>
+        }
+        <tr><td>Sales Taxes: @Model.TotalSalesTax.ToString("0.00")</td></tr>
+        <tr><td>Total: @Model.TotalPrice.ToString("0.00")</td></tr>
+    </table>
+    <div style="clear: both;">
+        <a asp-controller="Product" asp-action="Index" class="btn btn-info" style="float: right">Back to Shopping</a>
+    </div>
+</div>

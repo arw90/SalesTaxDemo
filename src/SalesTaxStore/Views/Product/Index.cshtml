@@ -1,0 +1,46 @@
+﻿@model List<Product>
+
+<div style="position: relative">
+    <h1 class="display-6">Welcome to the dealer store! &nbsp;<small>We're glad you're here.</small></h1>
+    <p>How to order items using this store:</p>
+    <ol>
+        <li>Enter in a quantity</li>
+        <li>Select whether the item is imported</li>
+        <li>Choose which item to order</li>
+        <li>Enter a price</li>
+        <li>Hit checkout to see your final receipt!</li>
+        <li>Note: You can enter up to 5 products at a time - basic validation is in place for submitted items, but blank entires will simply be ignored</li>
+    </ol>
+
+    <div>
+        @Html.ValidationSummary()
+    </div>
+
+    <form class="form" asp-controller="Product" asp-action="AddToCart">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Is Imported</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < 5; i++) // Allow up to five items to be entered
+                {
+                    <tr>
+                        <td>@Html.TextBoxFor(x => x[i].Quantity, new { @class = "form-control" })</td>
+                        <td>@Html.CheckBoxFor(x => x[i].IsImported, new { @class = "form-control" })</td>
+                        <td>@Html.DropDownListFor(x => x[i].Name, new SelectList(ViewBag.ProductNames), "Select Product", new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(x => x[i].BasePrice, new { @class = "form-control" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div style="clear: both;">
+            <a asp-controller="Product" asp-action="Index" class="btn btn-warning" style="float: left">Reset</a>
+            <input type="submit" value="Checkout" class="btn btn-info" style="float: right" />
+        </div>
+    </form>
+</div>
